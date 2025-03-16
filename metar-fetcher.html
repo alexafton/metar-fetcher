@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METAR Fetcher</title>
+
+    <!-- CSS Styling -->
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e; /* Dark background similar to Chartfox or Navigraph */
+            color: #f0f0f0; /* Light text color for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: #2c2f38; /* Darker background for the container */
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 400px;
+        }
+
+        /* Heading styling */
+        h1 {
+            color: #1f78d1; /* Bright color for the heading */
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Input styling */
+        input {
+            padding: 12px 15px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #4a4a4a; /* Border color similar to chartfox */
+            border-radius: 4px;
+            background-color: #353d46; /* Dark background for input */
+            color: #f0f0f0; /* Light text inside the input */
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: #b5b5b5; /* Lighter placeholder text */
+        }
+
+        /* Button styling */
+        button {
+            padding: 12px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Result section styling */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #4a4a4a;
+            border-radius: 4px;
+            background-color: #353d46;
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Real World METAR</h1>
+        <p>Enter ICAO Code to get METAR data</p>
+
+        <!-- Search form -->
+        <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., KATL)">
+        <button onclick="fetchMetar()">Search</button>
+
+        <!-- Result section -->
+        <div id="result" class="result">
+            <p id="metarData"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to fetch METAR data based on ICAO code
+        function fetchMetar() {
+            const icaoCode = document.getElementById('icaoInput').value;
+            const metarURL = `https://metar.vatsim.net/metar.php?id=${icaoCode}`;
+
+            // Clear previous results
+            document.getElementById('metarData').innerText = 'Loading...';
+
+            // Fetch METAR data
+            fetch(metarURL)
+                .then(response => response.text())
+                .then(data => {
+                    // Display the METAR data in the result section
+                    document.getElementById('metarData').innerText = data;
+                })
+                .catch(error => {
+                    // Handle any errors
+                    document.getElementById('metarData').innerText = 'Error fetching data. Please try again.';
+                });
+        }
+    </script>
+
+</body>
+</html>
