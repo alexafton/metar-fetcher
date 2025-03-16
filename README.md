@@ -1,2 +1,3 @@
-# metar-fetcher
-This is a Metar-Fetcher that track Real World Weather from Vatsim 
+# Metar Fetcher
+This is a html that track real world metar from Vatsim
+[Metar-Fetcher-Link](https://alexafton.github.io/metar-fetcher/)
